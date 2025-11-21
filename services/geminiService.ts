@@ -1,14 +1,13 @@
 import { GoogleGenAI, Type, Schema } from "@google/genai";
 import { RecommendationResult } from "../types";
 
-// Initialize the client with the API key from the environment
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
 export const getCoffeeRecommendation = async (
   userPreference: string,
   menuItemsJson: string
 ): Promise<RecommendationResult> => {
   try {
+    // Initialize the client inside the function to avoid top-level execution issues
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const model = "gemini-2.5-flash";
     
     const schema: Schema = {
